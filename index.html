@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Carrinho de compras</title>
+</head>
+
+<body>
+  <main class="conteudo-principal">
+    <div class="grafismo-azul"></div>
+    <section class="adicionar-produto">
+      <h1 class="titulo">
+        Shopping <span class="texto-azul">Cart</span>
+      </h1>
+
+      <form class="formulario">
+        <label class="campo-grupo">
+          <span class="texto-medio-azul">Product</span>
+          <div>
+            <select class="produto-input" name="product" id="product" onchange="changeValues()">
+              <option value="None">--None--</option>
+              <option value="Headphone">Headphones</option>
+              <option value="Smartphone">Smartphone</option>
+              <option value="VRGlasses">VR Glasses</option>
+            </select>
+          </div>
+        </label>
+
+        <label class="campo-grupo">
+          <span class="texto-medio-azul">Price</span>
+          <p style="font-size:30px;" id="product-price">$0.00</p>
+        </label>
+
+        <label class="campo-grupo">
+          <span class="texto-medio-azul">Quantity</span>
+          <input class="quantidade-input" id="quantity" type="number" placeholder="100">
+        </label>
+
+        <section class="parte-inferior">
+          <section class="botoes-wrapper">
+            <button onclick="addItem()" type="button" class="botao-form botao-adicionar">Add</button>
+            <button onclick="removeItem()" type="button" class="botao-form botao-remover">Remove</button>
+            <button onclick="clearCart()" type="button" class="botao-form botao-limpar">Clear</button>
+          </section>
+        </section>
+        
+      </form>
+    </section>
+    <section class="carrinho">
+      <img src="./assets/carrinho-cinza.svg" alt="Imagem de um carrinho de compras cinza">
+
+      <div class="titulo-wrapper">
+        <img src="./assets/icone-carrinho.svg" alt="ícone de carrinho">
+
+        <h2 class="carrinho__titulo">Cart items</h2>
+      </div>
+
+      <section class="carrinho__produtos" id="cart-summary"></section>
+
+      <div class="divisoria"></div>
+
+      <p class="carrinho__total">
+        Total: <span class="texto-azul" id="total-value">$0.00</span>
+      </p>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>
