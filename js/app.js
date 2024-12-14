@@ -7,8 +7,9 @@ mapPriceByProduct.set('VRGlasses', 5000.00);
 
 function changeValues() {
   const product = document.getElementById('product').value;
-
-  if (product == '--None--') {
+  console.log('product ' + product);
+  
+  if (product == 'None') {
     document.getElementById('product-price').innerHTML = '$0.00';
   }
 
