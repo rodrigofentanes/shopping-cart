@@ -7,7 +7,14 @@ mapPriceByProduct.set('VRGlasses', 5000.00);
 
 function changeValues() {
   const product = document.getElementById('product').value;
-  document.getElementById('product-price').innerHTML = '$' + parseFloat(mapPriceByProduct.get(product)).toFixed(2);
+
+  if (product == '--None--') {
+    document.getElementById('product-price').innerHTML = '$0.00';
+  }
+
+  else {
+    document.getElementById('product-price').innerHTML = '$' + parseFloat(mapPriceByProduct.get(product)).toFixed(2);
+  }
 }
 
 function addItem() {
