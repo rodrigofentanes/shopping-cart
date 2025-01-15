@@ -1,0 +1,34 @@
+[
+  {
+    "id": "USR-0001",
+    "nome": "Ana",
+    "idade": 32,
+    "cpf": "23423423423",
+    "email": "ana@email.com",
+    "telefones": [
+      "551198745632", 
+      "551198745633"
+    ],
+    "endereco": {
+      "rua": "Rua Joseph Climber",
+      "numero": "45",
+      "complemento": "apto 43"
+    }
+  },
+  {
+    "id": "USR-0002",
+    "nome": "Julio",
+    "idade": 33,
+    "cpf": "123141424314",
+    "email": "julio@email.com",
+    "telefones": [
+      "551193424525453", 
+      "551192423424"
+    ],
+    "endereco": {
+      "rua": "Rua Cacau lino",
+      "numero": "33",
+      "complemento": "apto 1004"
+    }
+  }
+]
