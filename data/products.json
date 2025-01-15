@@ -1,0 +1,14 @@
+{
+  "PRD-0001" : {
+    "name": "Headphone",
+    "price": 200.00
+  },
+  "PRD-0002" : {
+    "name": "Smartphone",
+    "price": 1400.00
+  },
+  "PRD-0003" : {
+    "name": "VRGlasses",
+    "price": 5000.00
+  }
+}

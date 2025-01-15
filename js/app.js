@@ -1,43 +1,48 @@
-let mapSummaryProducts = new Map();
+import products from '../data/products.json' with { type: "json" };
 
-const mapPriceByProduct = new Map();
-mapPriceByProduct.set('Headphone', 200.00);
-mapPriceByProduct.set('Smartphone', 1400.00);
-mapPriceByProduct.set('VRGlasses', 5000.00);
+window.changeValues = changeValues;
+window.addItem = addItem;
+window.removeItem = removeItem;
+window.clearCart = clearCart;
+
+const mapProducts = new Map(Object.entries(products));
+let mapCartItems = new Map();
+// debugger; // Esta linha permite acessar as variáveis em tempo real por exemplo.
 
 function changeValues() {
-  const product = document.getElementById('product').value;
-  console.log('product ' + product);
+  const productId = document.getElementById('product').value;
   
   if (product == 'None') {
     document.getElementById('product-price').innerHTML = '$0.00';
   }
 
   else {
-    document.getElementById('product-price').innerHTML = '$' + parseFloat(mapPriceByProduct.get(product)).toFixed(2);
+    document.getElementById('product-price').innerHTML = '$' + parseFloat(mapProducts.get(productId).price).toFixed(2);
   }
 }
 
 function addItem() {
-  const product = document.getElementById('product').value;
+  const productId = document.getElementById('product').value;
 
-  if (mapPriceByProduct.has(product)) {
+  if (mapProducts.has(productId)) {
     errorGuide('product', 'remove');
     const quantity = document.getElementById('quantity').value;
 
     if (quantity > 0) {
       errorGuide('quantity', 'remove');
-      const price = mapPriceByProduct.get(product);
+      const price = mapProducts.get(productId).price;
+      const name = mapProducts.get(productId).name;
 
-      if (mapSummaryProducts.has(product)) {
-        mapSummaryProducts.get(product).set('Quantity', parseFloat(mapSummaryProducts.get(product).get('Quantity')) + parseFloat(quantity));
+      if (mapCartItems.has(productId)) {
+        mapCartItems.get(productId).set('quantity', parseFloat(mapCartItems.get(productId).get('quantity')) + parseFloat(quantity));
       }
       
       else {
-        mapSummaryProducts.set(product, new Map([
-          ['Name', product],
-          ['Price', price],
-          ['Quantity', quantity]
+        mapCartItems.set(productId, new Map([
+          ["id", productId],
+          ["name", name],
+          ["price", price],
+          ["quantity", quantity]
         ]));
       }
 
@@ -55,23 +60,26 @@ function addItem() {
 }
 
 function removeItem() {
-  const product = document.getElementById('product').value;
+  const productId = document.getElementById('product').value;
   
-  if (mapPriceByProduct.has(product)) {
+  if (mapProducts.has(productId)) {
     errorGuide('product', 'remove');
     const quantity = document.getElementById('quantity').value;
+
+    console.log("quantity :: " + quantity);
+    
 
     if (quantity > 0) {
       errorGuide('quantity', 'remove');
 
-      if (mapSummaryProducts.has(product)) {
-        mapSummaryProducts.get(product).set('Quantity', parseFloat(mapSummaryProducts.get(product).get('Quantity')) - parseFloat(quantity));
+      if (mapCartItems.has(productId)) {
+        mapCartItems.get(productId).set('quantity', parseFloat(mapCartItems.get(productId).get('quantity')) - parseFloat(quantity));
+
+        if (mapCartItems.get(productId).get('quantity') < 1) {
+          mapCartItems.delete(productId);
+        }
       }
     
-      if (mapSummaryProducts.get(product).get('Quantity') < 1) {
-        mapSummaryProducts.delete(product);
-      }
-      
       printCartItems();
     }
 
@@ -91,7 +99,7 @@ function clearCart() {
   document.getElementById('quantity').value = '';
   document.getElementById('cart-summary').innerHTML = '';
   document.getElementById('total-value').innerHTML = '$0.00';
-  mapSummaryProducts = new Map();
+  mapCartItems = new Map();
 
   if (document.getElementById('product').classList.contains('attention')) {
     document.getElementById('product').classList.remove('attention')
@@ -107,28 +115,28 @@ function printCartItems() {
 
   document.getElementById('cart-summary').innerHTML = '';
   
-  mapSummaryProducts.forEach(item => {
+  mapCartItems.forEach(item => {
     document.getElementById('cart-summary').innerHTML +=  ''
     + '<section class="carrinho__produtos__produto" id="cart-summary">'
     + '   <span class="texto-azul">' 
-    + `       ${item.get('Quantity')}x`
+    + `       ${item.get('quantity')}x`
     + '   </span>'
     + '   <b>' 
-    + `       ${item.get('Name')}`
+    + `       ${item.get('name')}`
     + '   </b>'
     + '   <span class="texto-azul">'
-    + `       $${item.get('Price').toFixed(2)}`
+    + `       $${item.get('price').toFixed(2)}`
     + '   </span>'
     + '   <br>'
-    + `   (Total: $${(item.get('Price').toFixed(2) * item.get('Quantity')).toFixed(2)})`
+    + `   (Total: $${(item.get('price').toFixed(2) * item.get('quantity')).toFixed(2)})`
     + '</section>';
 
     if (!totalPrice) {
-      totalPrice = parseFloat((item.get('Quantity') * item.get('Price').toFixed(2)).toFixed(2));
+      totalPrice = parseFloat((item.get('quantity') * item.get('price').toFixed(2)).toFixed(2));
     }
     
     else {
-      totalPrice = parseFloat(parseFloat(totalPrice) + parseFloat(parseInt(item.get('Quantity')) * parseFloat(item.get('Price').toFixed(2))));
+      totalPrice = parseFloat(parseFloat(totalPrice) + parseFloat(parseInt(item.get('quantity')) * parseFloat(item.get('price').toFixed(2))));
     }
   });
 
